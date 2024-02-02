@@ -4,5 +4,6 @@ fn main() {
     let builder = bindgen_cuda::Builder::default();
     println!("cargo:info={builder:?}");
     let bindings = builder.build_ptx().unwrap();
-    bindings.write("src/lib.rs").unwrap();
+    let out_path = std::path::PathBuf::from(env::var("OUT_DIR").unwrap());
+    bindings.write(out_path.join("lib.in")).unwrap();
 }
